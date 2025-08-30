@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MercadoLivre - Autorização</title>
+    <meta charset="utf-8">
+</head>
+<body>
+    <div style="font-family: Arial; max-width: 600px; margin: 50px auto; padding: 20px;">
+        <h1>🔐 MercadoLivre - Autorização</h1>
+        <div id="result">Processando...</div>
+        
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            const error = urlParams.get('error');
+            
+            if (error) {
+                document.getElementById('result').innerHTML = `
+                    <div style="color: red;">
+                        <h2>❌ Erro na autorização</h2>
+                        <p><strong>Erro:</strong> ${error}</p>
+                        <p><strong>Descrição:</strong> ${urlParams.get('error_description') || 'N/A'}</p>
+                    </div>
+                `;
+            } else if (code) {
+                document.getElementById('result').innerHTML = `
+                    <div style="color: green;">
+                        <h2>✅ Código recebido com sucesso!</h2>
+                        <p><strong>Código de autorização:</strong></p>
+                        <textarea style="width:100%; height:100px; font-family:monospace;">${code}</textarea>
+                        <br><br>
+                        <p>📋 <strong>Copie este código</strong> e use em sua aplicação para obter o access_token.</p>
+                        <p>⚠️ Este código expira em poucos minutos!</p>
+                    </div>
+                `;
+            } else {
+                document.getElementById('result').innerHTML = `
+                    <div style="color: orange;">
+                        <h2>⚠️ Nenhum código encontrado</h2>
+                        <p>Verifique se a autorização foi realizada corretamente.</p>
+                    </div>
+                `;
+            }
+        </script>
+    </div>
+</body>
+</html>
